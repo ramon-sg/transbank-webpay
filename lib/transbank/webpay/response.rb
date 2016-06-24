@@ -44,7 +44,7 @@ module Transbank
 
       def xml_result
         parser.parse(doc.at_xpath("//return").to_s).fetch( :return, {}).tap do |hash|
-          hash[:detail_output].tap {|r| r[:amount] = r[:amount].to_i }
+          hash[:detail_output].tap {|detail| detail[:amount] = detail[:amount].to_i unless detail.nil?}
 
           hash.each { |k, v| hash.store(k, OpenStruct.new(v)) if v.is_a?(Hash) }
         end
