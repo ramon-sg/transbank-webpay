@@ -1,0 +1,14 @@
+inherit_from:
+  - .rubocop_todo.yml
+
+# Files you want to exclude
+AllCops:
+  Exclude:
+    - Guardfile
+    - lib/transbank-webpay.rb
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 13
