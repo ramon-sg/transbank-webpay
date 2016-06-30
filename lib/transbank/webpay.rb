@@ -7,6 +7,7 @@ require 'ostruct'
 
 require 'transbank/webpay/version'
 require 'transbank/webpay/configuration'
+require 'transbank/webpay/helper'
 require 'transbank/webpay/exception_response'
 require 'transbank/webpay/client'
 require 'transbank/webpay/response'

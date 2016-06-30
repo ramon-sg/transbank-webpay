@@ -2,7 +2,7 @@ module Transbank
   module Webpay
     class Configuration
       attr_accessor :wsdl_transaction_url
-      attr_accessor :wsdl_cancel_url
+      attr_accessor :wsdl_nullify_url
 
       attr_accessor :commerce_code
 
