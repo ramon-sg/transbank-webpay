@@ -2,7 +2,7 @@
 module Transbank
   module Webpay
     class Response
-      attr_accessor :content, :action, :attributes, :errors, :exception
+      attr_reader :content, :action, :attributes, :errors, :exception, :params
 
       RESPONSE_CODE = {
         get_transaction_result: {
@@ -22,11 +22,13 @@ module Transbank
         }
       }
 
-      def initialize(content, action)
-        self.content = content
-        self.action = action
-        self.attributes = xml_result
-        self.errors = []
+      def initialize(content, action, params)
+        @content = content
+        @action = action
+        @params = params
+        @attributes = xml_result
+        @errors = []
+
         validate!
       end
 
