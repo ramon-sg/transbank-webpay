@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'signer'
   spec.add_dependency 'savon', '~> 2.0'
   spec.add_dependency 'nokogiri'
-  spec.add_dependency 'nori'
 
   spec.add_development_dependency 'bundler', '~> 1.11'
   spec.add_development_dependency 'rake', '~> 10.0'

@@ -1,0 +1,8 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <soap:Fault>
+            <faultcode>soap:Server</faultcode>
+            <faultstring>&lt;!-- Invalid return url(304) --&gt;</faultstring>
+        </soap:Fault>
+    </soap:Body>
+</soap:Envelope>

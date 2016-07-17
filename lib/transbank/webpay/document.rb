@@ -8,7 +8,6 @@ module Transbank
       def initialize(wsdl_url, action, params = {})
         client = Savon.client(wsdl: wsdl_url)
         xml = client.build_request(action, message: params).body
-
         @unsigned_document = Nokogiri::XML(xml)
       end
 
