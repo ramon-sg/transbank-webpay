@@ -71,7 +71,7 @@ module Transbank
       def assin_values(hash, result, child)
         return if child.name == 'text'
 
-        key = underscore(child.name).to_sym
+        key = underscore child.name
         value = typecasting result
         hash.store key, value
       end

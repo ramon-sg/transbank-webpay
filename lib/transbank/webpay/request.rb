@@ -6,7 +6,7 @@ module Transbank
       def initialize(wsdl_url, action, params = {})
         @params = params
         @action = action
-        @document = Document.new(wsdl_url, action, params)
+        @document = Document.new(action, params)
         @client = Client.new wsdl_url
       end
 

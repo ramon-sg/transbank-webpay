@@ -1,6 +1,7 @@
 module Transbank
   module Webpay
     class Document
+      include Helper
       attr_reader :unsigned_xml
       XML_HEADER = "<env:Header><wsse:Security xmlns:wsse='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd' wsse:mustUnderstand='1'/></env:Header>".freeze # rubocop:disable LineLength
       SOAPENV = 'http://schemas.xmlsoap.org/soap/envelope/'.freeze
@@ -13,7 +14,8 @@ module Transbank
       }.freeze
 
       def initialize(action, params = {})
-        @unsigned_xml = build_xml action, params
+        camelcase_action = camelcase(action).to_sym
+        @unsigned_xml = build_xml camelcase_action, params
       end
 
       def unsigned_document

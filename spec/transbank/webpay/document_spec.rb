@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Transbank::Webpay::Document do
-  context 'initTransaction' do
+  context 'init_transaction' do
     let(:xml) { open_xml 'init_transaction/request_unsigned.xml' }
     let(:params) do
       hash = {
@@ -20,7 +20,7 @@ RSpec.describe Transbank::Webpay::Document do
       { wsInitTransactionInput: hash }
     end
 
-    subject { described_class.new(:initTransaction, params) }
+    subject { described_class.new(:init_transaction, params) }
 
     describe '#unsigned_xml' do
       it { expect(subject.unsigned_xml).to eq_xml(xml) }
@@ -32,7 +32,7 @@ RSpec.describe Transbank::Webpay::Document do
     end
   end
 
-  context 'getTransactionResult' do
+  context 'get_transaction_result' do
     let(:xml) { open_xml 'get_transaction_result/request_unsigned.xml' }
     let(:token) { 'e123b4d90adfde61427trw370961d6e58824429c40d90ae2fbe565c26c65Ccd4' }
     subject { described_class.new(:getTransactionResult, tokenInput: token) }
@@ -47,7 +47,7 @@ RSpec.describe Transbank::Webpay::Document do
     end
   end
 
-  context 'acknowledgeTransaction' do
+  context 'acknowledge_transaction' do
     let(:xml) { open_xml 'acknowledge_transaction/request_unsigned.xml' }
     let(:token) { 'nxBdsbdSPixMZsIajOJWyg2OklTBcXXiW1rxnSpi9fCg1sMaxay4xWMuYV0fTUay' }
     subject { described_class.new(:acknowledgeTransaction, tokenInput: token) }
@@ -87,8 +87,4 @@ RSpec.describe Transbank::Webpay::Document do
       it { expect(subject.signed_xml).to eq_xml(signed_xml) }
     end
   end
-
-  # def clear(xml)
-  #   xml.gsub(%r{\s*/?>\s*}, ">").gsub(%r{\s*/?<\s*}, "<")
-  # end
 end
