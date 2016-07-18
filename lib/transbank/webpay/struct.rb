@@ -1,5 +1,6 @@
 module Transbank
   module Webpay
-    VERSION = "0.2.0"
+    class Struct < OpenStruct
+    end
   end
 end

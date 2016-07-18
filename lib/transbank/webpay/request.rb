@@ -1,11 +1,12 @@
 module Transbank
   module Webpay
     class Request
-      attr_accessor :client, :document, :action
+      attr_accessor :client, :document, :action, :params
 
       def initialize(wsdl_url, action, params = {})
+        @params = params
         @action = action
-        @document = Document.new(wsdl_url, action, params)
+        @document = Document.new(action, params)
         @client = Client.new wsdl_url
       end
 
@@ -13,9 +14,9 @@ module Transbank
         rescue_exceptions = Transbank::Webpay.configuration.rescue_exceptions
 
         @response ||= begin
-          Response.new client.post(document.to_xml), action
+          Response.new client.post(document.to_xml), action, params
         rescue match_class(rescue_exceptions) => error
-          ExceptionResponse.new error, action
+          ExceptionResponse.new error, action, params
         end
       end
 

@@ -1,11 +1,12 @@
 module Transbank
   module Webpay
     class ExceptionResponse
-      attr_accessor :exception, :action
+      attr_reader :exception, :action, :params
 
-      def initialize(exception, action)
-        self.exception = exception
-        self.action = action
+      def initialize(exception, action, params)
+        @exception = exception
+        @action = action
+        @params = params
       end
 
       def valid?

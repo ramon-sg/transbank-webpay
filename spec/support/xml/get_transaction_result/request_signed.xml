@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://service.wswebpay.webpay.transbank.com/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Header>
+        <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" wsse:mustUnderstand="1">
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <SignedInfo>
+                    <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+                    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                    <Reference URI="#_40faddffbd1de5a1abf54ed9ef588077e0e93296">
+                        <Transforms>
+                            <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                        <DigestValue>PpTm760uvSzrywQeLyeHp2ySXA4=</DigestValue>
+                    </Reference>
+                </SignedInfo>
+                <SignatureValue>XziyFsobjFUNEGiBCP+RaAcNdCvdGf272Gl8lwvL6m+1sM5JEt/E/ZPMzjdACfzdGpG1KOCKfXM/CjVKHEuKmLi0EssIBTsPTvhZ732Vz5MtagOPDT0UIfjcGovc3WpBNrUOHHq1RHK3PT3el9GkDVQGGMrqaIqL22XwdhAGJhYMDd1R8fRDVgOaHgTd/+5Ebyvl+hP+2264UdhVts4VTsGLXMcENkimBlWGwQRDNYnP09KcsN7QTbNxfDBaMYT0orOvi8kV/oW/aYspx6HBIjRTtf8IIAjCM0rGNZP/RhqVvUyc80yFmZBzze6UFhQs0ToDXZIe1bBGc0sDAcUBVw==</SignatureValue>
+                <KeyInfo>
+                    <X509Data>
+                        <X509IssuerSerial>
+                            <X509IssuerName>C=CL,ST=Some-State,L=SANTIAGO,O=Internet Widgits Pty Ltd,CN=597029124456</X509IssuerName>
+                            <X509SerialNumber>18335542990572456259</X509SerialNumber>
+                        </X509IssuerSerial>
+                        <X509Certificate>MIIDWjCCAkICCQD+dO80PPmJQzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJDTDETMBEGA1UECBMKU29tZS1TdGF0ZTERMA8GA1UEBxMIU0FOVElBR08xITAfBgNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAxMMNTk3MDI5MTI0NDU2MB4XDTE1MDIyNTE3MjAxNVoXDTE5MDIyNDE3MjAxNVowbzELMAkGA1UEBhMCQ0wxEzARBgNVBAgTClNvbWUtU3RhdGUxETAPBgNVBAcTCFNBTlRJQUdPMSEwHwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxFTATBgNVBAMTDDU5NzAyOTEyNDQ1NjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANgchO1+f/ByFIhdAeGTro97D9qR4pXDL/hpF87qx8ip52+GUxKzTJrwhWkjA+7IN53zK5Usl5tsGlVqaXN10QNa97mzpPPXFpVKMQfLtv5t21CTmLVRi2lTP/HCIFukyfeawmhav7DVHPqAitCyCZ1wuCy/7kp5cqNnpVa82KWDZFsx0yKXipUYYxP7S386G/Vp4fFPFrPCW3t3/Mm3G/57YXYAqYTAqlMfe7NcTlzGaVvhzDYUN7CdCCwfZuIxrIciDr+SxN1jb1ZgiIdA3TyEUvvKeeIfpr+YrwqE3JuJ05YRfwxM9WiI2oZQKXGozxroacXal4DAad59n1hfkbsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAaJM1/P/ke+BwUe7MhaZTWXVlLKxMCII2v/Leov/E1AKoIfrtm3cLbWY44IaaC43uwHcMvrq72hKG9t9b9Z5BJu/2Rsy3RSNCzu7x+89Af2KvwKypWBjpyfWxmnDr4VN7Lq4vcvA8ba/+u59wWDCAa5PqxWg727XQSuDkJS7KiIhFfGYUZwaLBfGybeo+KYYsJ3IQHZ5U6lsBoRo5OWYqmnZbaqY6UiI5lCilR7q3bdNhGpvygyxl16ZlIKU0TG1EsvwuZuWTN5gZNkCjxM5VhZHgNdojvzDd3dtk0jQpR0WvLxk35Cw9NItWe6sGGLpBrMddFuEenNHZHL+ftYJMCg==</X509Certificate>
+                    </X509Data>
+                </KeyInfo>
+            </Signature>
+        </wsse:Security>
+    </env:Header>
+    <env:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="_40faddffbd1de5a1abf54ed9ef588077e0e93296">
+        <tns:getTransactionResult>
+            <tokenInput>e123b4d90adfde61427trw370961d6e58824429c40d90ae2fbe565c26c65Ccd4</tokenInput>
+        </tns:getTransactionResult>
+    </env:Body>
+</env:Envelope>

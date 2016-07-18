@@ -21,6 +21,12 @@ module Transbank
         Request.new(url, :acknowledge_transaction, params).response
       end
 
+      def nullify(underscore_params = {})
+        params = build_nullify_params(underscore_params)
+        url    = config.wsdl_nullify_url
+        Request.new(url, :nullify, params).response
+      end
+
       private
 
       def config

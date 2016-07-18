@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://service.wswebpay.webpay.transbank.com/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Header>
+        <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" wsse:mustUnderstand="1">
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <SignedInfo>
+                    <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+                    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                    <Reference URI="#_6fe9df408caac9121317ba302f54b62c358754c9">
+                        <Transforms>
+                            <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                        <DigestValue>qBJ64sv/I8FWxXDG8BwyQshwDms=</DigestValue>
+                    </Reference>
+                </SignedInfo>
+                <SignatureValue>1ScDQqye02zCtgPICjug0FX4O5HCDdrGoMIZNIX82bNVA/mGgdCU19Zo7f/wny8/bvt+huU+o79mF3inv/zaIJwzqI+jMkV7xIMFU+/FvTuOF8rkzPXhvNBVPYjSh6AmRPXdYvwKEfQHvdkjOcMDPND95trS+Ux4KwFsjWHKna36cdgfH3i7TueFUNAJHCjADuJ2RxJVCZDreBCe7aQQY9+K+AV3RYlzFIxXVNHSbo/7PHQaIl4TrW1c/Ck91y6ZmSD7c2ATAiJVv7tfzC87OLRNE4BdullkD5EfZoOtAOofDO/fS8cwFpx1HoxLLsjEGfjonw5eQbmhODmjYtBKqg==</SignatureValue>
+                <KeyInfo>
+                    <X509Data>
+                        <X509IssuerSerial>
+                            <X509IssuerName>C=CL,ST=Some-State,L=SANTIAGO,O=Internet Widgits Pty Ltd,CN=597029124456</X509IssuerName>
+                            <X509SerialNumber>18335542990572456259</X509SerialNumber>
+                        </X509IssuerSerial>
+                        <X509Certificate>MIIDWjCCAkICCQD+dO80PPmJQzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJDTDETMBEGA1UECBMKU29tZS1TdGF0ZTERMA8GA1UEBxMIU0FOVElBR08xITAfBgNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAxMMNTk3MDI5MTI0NDU2MB4XDTE1MDIyNTE3MjAxNVoXDTE5MDIyNDE3MjAxNVowbzELMAkGA1UEBhMCQ0wxEzARBgNVBAgTClNvbWUtU3RhdGUxETAPBgNVBAcTCFNBTlRJQUdPMSEwHwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxFTATBgNVBAMTDDU5NzAyOTEyNDQ1NjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANgchO1+f/ByFIhdAeGTro97D9qR4pXDL/hpF87qx8ip52+GUxKzTJrwhWkjA+7IN53zK5Usl5tsGlVqaXN10QNa97mzpPPXFpVKMQfLtv5t21CTmLVRi2lTP/HCIFukyfeawmhav7DVHPqAitCyCZ1wuCy/7kp5cqNnpVa82KWDZFsx0yKXipUYYxP7S386G/Vp4fFPFrPCW3t3/Mm3G/57YXYAqYTAqlMfe7NcTlzGaVvhzDYUN7CdCCwfZuIxrIciDr+SxN1jb1ZgiIdA3TyEUvvKeeIfpr+YrwqE3JuJ05YRfwxM9WiI2oZQKXGozxroacXal4DAad59n1hfkbsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAaJM1/P/ke+BwUe7MhaZTWXVlLKxMCII2v/Leov/E1AKoIfrtm3cLbWY44IaaC43uwHcMvrq72hKG9t9b9Z5BJu/2Rsy3RSNCzu7x+89Af2KvwKypWBjpyfWxmnDr4VN7Lq4vcvA8ba/+u59wWDCAa5PqxWg727XQSuDkJS7KiIhFfGYUZwaLBfGybeo+KYYsJ3IQHZ5U6lsBoRo5OWYqmnZbaqY6UiI5lCilR7q3bdNhGpvygyxl16ZlIKU0TG1EsvwuZuWTN5gZNkCjxM5VhZHgNdojvzDd3dtk0jQpR0WvLxk35Cw9NItWe6sGGLpBrMddFuEenNHZHL+ftYJMCg==</X509Certificate>
+                    </X509Data>
+                </KeyInfo>
+            </Signature>
+        </wsse:Security>
+    </env:Header>
+    <env:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="_6fe9df408caac9121317ba302f54b62c358754c9">
+        <tns:initTransaction>
+            <wsInitTransactionInput>
+                <wSTransactionType>TR_NORMAL_WS</wSTransactionType>
+                <buyOrder>D3BD392038A94CL30</buyOrder>
+                <sessionId>20160717203428</sessionId>
+                <returnURL>http://web.dev/verify</returnURL>
+                <finalURL>http://web.dev/finalize</finalURL>
+                <transactionDetails>
+                    <amount>10000</amount>
+                    <commerceCode>111020000333</commerceCode>
+                    <buyOrder>D3BD392038A94CL3</buyOrder>
+                </transactionDetails>
+            </wsInitTransactionInput>
+        </tns:initTransaction>
+    </env:Body>
+</env:Envelope>
