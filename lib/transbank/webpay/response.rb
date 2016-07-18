@@ -25,7 +25,7 @@ module Transbank
         result = ["valid: #{valid?}"]
         result << attributes.inspect if attributes?
         result << "error: \"#{errors_display}\"" if errors.any?
-        "#<#{self.class} #{result.join(', ')} >"
+        "#<#{self.class} #{result.join(', ')}>"
       end
 
       def exception?
