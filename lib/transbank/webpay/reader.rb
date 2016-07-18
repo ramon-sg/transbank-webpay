@@ -38,7 +38,15 @@ module Transbank
         xml_error.map { |e| e.text.gsub(/<!--|-->/, '').strip }
       end
 
+      def attributes?
+        xml_return != ""
+      end
+
       private
+
+      def xml_return
+        @xml_return ||= doc.at_xpath("//return").to_s
+      end
 
       def signature_decode
         Base64.decode64(signature_node.content)

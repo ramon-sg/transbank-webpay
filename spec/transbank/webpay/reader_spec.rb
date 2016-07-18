@@ -21,6 +21,18 @@ RSpec.describe Transbank::Webpay::Reader do
     end
   end
 
+  describe '#attributes?' do
+    context 'without attributes' do
+      subject { new_subject 'acknowledge_transaction/response_unsigned.xml' }
+      it { expect(subject.attributes?).to be(false) }
+    end
+
+    context 'with attributes' do
+      subject { new_subject 'init_transaction/response_unsigned.xml' }
+      it { expect(subject.attributes?).to be(true) }
+    end
+  end
+
   describe 'response_code_display' do
     context 'with response_code -1' do
       subject do
