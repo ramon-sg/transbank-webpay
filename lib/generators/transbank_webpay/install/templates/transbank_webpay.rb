@@ -3,7 +3,7 @@ Transbank::Webpay.configure do |config|
   config.wsdl_nullify_url     = 'NULLIFY_WEBPAY_SOAP_URL'
   config.cert_path            = 'ABSOLUTE_PATH_TO_CRT_FILE'
   config.key_path             = 'ABSOLUTE_PATH_TO_KEY_FILE'
-  config.server_cert_path     = 'ABSOLUTE_PATH_TO_SERVER_CRT_FILE'
+  config.server_cert_path     = 'ABSOLUTE_PATH_TO_SERVER_CRT_OR_PEM_FILE'
   config.commerce_code        = 'COMMERCE_CODE'
 
   # These are the default options for Net::HTTP
