@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://service.wswebpay.webpay.transbank.com/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Body>
+        <tns:initTransaction>
+            <wsInitTransactionInput>
+                <wSTransactionType>TR_NORMAL_WS</wSTransactionType>
+                <buyOrder>D3BD392038A94CL30</buyOrder>
+                <sessionId>20160717203428</sessionId>
+                <returnURL>http://web.dev/verify</returnURL>
+                <finalURL>http://web.dev/finalize</finalURL>
+                <transactionDetails>
+                    <amount>10000</amount>
+                    <commerceCode>111020000333</commerceCode>
+                    <buyOrder>D3BD392038A94CL3</buyOrder>
+                </transactionDetails>
+            </wsInitTransactionInput>
+        </tns:initTransaction>
+    </env:Body>
+</env:Envelope>

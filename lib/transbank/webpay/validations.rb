@@ -42,7 +42,7 @@ module Transbank
 
       # Validations
       def validate_response_code!
-        return if response_code.blank?
+        return if response_code.empty?
         @errors << response_code_display if response_code != '0'
       end
 
@@ -50,7 +50,7 @@ module Transbank
         return if content.class == Net::HTTPOK
 
         @errors += xml_error_display
-        @errors << content.message if content.respond_to?(:message) && @errors.blank?
+        @errors << content.message if content.respond_to?(:message) && @errors.empty?
       end
 
       def validate_document

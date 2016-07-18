@@ -1,26 +1,94 @@
 require 'spec_helper'
 
 RSpec.describe Transbank::Webpay::Document do
-  before(:all) do
-    Transbank::Webpay.configure do |config|
-      config.cert_path = File.join(ROOT_PATH, 'spec', 'keys', '597029124456.crt')
-      config.key_path = File.join(ROOT_PATH, 'spec', 'keys', '597029124456.key')
+  context 'initTransaction' do
+    let(:xml) { open_xml 'init_transaction/request_unsigned.xml' }
+    let(:params) do
+      hash = {
+        wSTransactionType: 'TR_NORMAL_WS',
+        buyOrder: 'D3BD392038A94CL30',
+        sessionId: 20_160_717_203_428,
+        returnURL: 'http://web.dev/verify',
+        finalURL: 'http://web.dev/finalize',
+        transactionDetails: {
+          amount: 10_000,
+          commerceCode: 111_020_000_333,
+          buyOrder: 'D3BD392038A94CL3'
+        }
+      }
+
+      { wsInitTransactionInput: hash }
+    end
+
+    subject { described_class.new(:initTransaction, params) }
+
+    describe '#unsigned_xml' do
+      it { expect(subject.unsigned_xml).to eq_xml(xml) }
+    end
+
+    describe '#signed_xml' do
+      let(:signed_xml) { open_xml 'init_transaction/request_signed.xml' }
+      it { expect(subject.signed_xml).to eq_xml(signed_xml) }
     end
   end
 
-  describe '#to_xml' do
-    before(:each) do
-      xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><env:Envelope xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:tns=\"http://service.wswebpay.webpay.transbank.com/\" xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\"><env:Body><tns:initTransaction><email>user@email.com</email></tns:initTransaction></env:Body></env:Envelope>" # rubocop:disable LineLength
+  context 'getTransactionResult' do
+    let(:xml) { open_xml 'get_transaction_result/request_unsigned.xml' }
+    let(:token) { 'e123b4d90adfde61427trw370961d6e58824429c40d90ae2fbe565c26c65Ccd4' }
+    subject { described_class.new(:getTransactionResult, tokenInput: token) }
 
-      request = double(body: xml)
-      client = double(build_request: request)
-      allow(Savon).to receive(:client).and_return(client)
+    describe '#unsigned_xml' do
+      it { expect(subject.unsigned_xml).to eq_xml(xml) }
     end
 
-    it do
-      valid_xml = '<?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://service.wswebpay.webpay.transbank.com/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header><wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" wsse:mustUnderstand="1"><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#_7463881f2a66f86a6969cf3356878417957fd481"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>mtCDe7p5tMYltdEXTeYLVVs7cAs=</DigestValue></Reference></SignedInfo><SignatureValue>K5TMr75N6HgNyBT5efcmdTiIi3zKhvGDa0gCKFqMTdPMYLZUui3T9RarOZQzOOPw1RzRQmVgo9a/U18xkcfJWtRWfmWvaDS6SC/krofyEzQr80C/RoprQ1nFht2I/Xvzoxvh//VlrtVyfPSDFbDdjfwHwRfdbA1MHekYWtxcbIDhXvBaD//dauPqUwV2z0NpHlhRqGx+YseOP3DUR/vBFKdEs0SPi7yJNHQgLthfhtG35O/4x6V1tccnKNQeEHAu8deZ3LFUsqk87dl7zWSAuN+otUDLuvPGh8pPe7wlFxCJt49wHSeWgRLcn9JL9KhQDDdWA/z9ZXKHiyMF/ILJRQ==</SignatureValue><KeyInfo><X509Data><X509IssuerSerial><X509IssuerName>C=CL,ST=Some-State,L=SANTIAGO,O=Internet Widgits Pty Ltd,CN=597029124456</X509IssuerName><X509SerialNumber>18335542990572456259</X509SerialNumber></X509IssuerSerial><X509Certificate>MIIDWjCCAkICCQD+dO80PPmJQzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJDTDETMBEGA1UECBMKU29tZS1TdGF0ZTERMA8GA1UEBxMIU0FOVElBR08xITAfBgNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAxMMNTk3MDI5MTI0NDU2MB4XDTE1MDIyNTE3MjAxNVoXDTE5MDIyNDE3MjAxNVowbzELMAkGA1UEBhMCQ0wxEzARBgNVBAgTClNvbWUtU3RhdGUxETAPBgNVBAcTCFNBTlRJQUdPMSEwHwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxFTATBgNVBAMTDDU5NzAyOTEyNDQ1NjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANgchO1+f/ByFIhdAeGTro97D9qR4pXDL/hpF87qx8ip52+GUxKzTJrwhWkjA+7IN53zK5Usl5tsGlVqaXN10QNa97mzpPPXFpVKMQfLtv5t21CTmLVRi2lTP/HCIFukyfeawmhav7DVHPqAitCyCZ1wuCy/7kp5cqNnpVa82KWDZFsx0yKXipUYYxP7S386G/Vp4fFPFrPCW3t3/Mm3G/57YXYAqYTAqlMfe7NcTlzGaVvhzDYUN7CdCCwfZuIxrIciDr+SxN1jb1ZgiIdA3TyEUvvKeeIfpr+YrwqE3JuJ05YRfwxM9WiI2oZQKXGozxroacXal4DAad59n1hfkbsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAaJM1/P/ke+BwUe7MhaZTWXVlLKxMCII2v/Leov/E1AKoIfrtm3cLbWY44IaaC43uwHcMvrq72hKG9t9b9Z5BJu/2Rsy3RSNCzu7x+89Af2KvwKypWBjpyfWxmnDr4VN7Lq4vcvA8ba/+u59wWDCAa5PqxWg727XQSuDkJS7KiIhFfGYUZwaLBfGybeo+KYYsJ3IQHZ5U6lsBoRo5OWYqmnZbaqY6UiI5lCilR7q3bdNhGpvygyxl16ZlIKU0TG1EsvwuZuWTN5gZNkCjxM5VhZHgNdojvzDd3dtk0jQpR0WvLxk35Cw9NItWe6sGGLpBrMddFuEenNHZHL+ftYJMCg==</X509Certificate></X509Data><wsse:SecurityTokenReference><X509Data xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><X509IssuerSerial><X509IssuerName>C=CL,ST=Some-State,L=SANTIAGO,O=Internet Widgits Pty Ltd,CN=597029124456</X509IssuerName><X509SerialNumber>18335542990572456259</X509SerialNumber></X509IssuerSerial><X509Certificate>MIIDWjCCAkICCQD+dO80PPmJQzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJDTDETMBEGA1UECBMKU29tZS1TdGF0ZTERMA8GA1UEBxMIU0FOVElBR08xITAfBgNVBAoTGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDEVMBMGA1UEAxMMNTk3MDI5MTI0NDU2MB4XDTE1MDIyNTE3MjAxNVoXDTE5MDIyNDE3MjAxNVowbzELMAkGA1UEBhMCQ0wxEzARBgNVBAgTClNvbWUtU3RhdGUxETAPBgNVBAcTCFNBTlRJQUdPMSEwHwYDVQQKExhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxFTATBgNVBAMTDDU5NzAyOTEyNDQ1NjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANgchO1+f/ByFIhdAeGTro97D9qR4pXDL/hpF87qx8ip52+GUxKzTJrwhWkjA+7IN53zK5Usl5tsGlVqaXN10QNa97mzpPPXFpVKMQfLtv5t21CTmLVRi2lTP/HCIFukyfeawmhav7DVHPqAitCyCZ1wuCy/7kp5cqNnpVa82KWDZFsx0yKXipUYYxP7S386G/Vp4fFPFrPCW3t3/Mm3G/57YXYAqYTAqlMfe7NcTlzGaVvhzDYUN7CdCCwfZuIxrIciDr+SxN1jb1ZgiIdA3TyEUvvKeeIfpr+YrwqE3JuJ05YRfwxM9WiI2oZQKXGozxroacXal4DAad59n1hfkbsCAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAaJM1/P/ke+BwUe7MhaZTWXVlLKxMCII2v/Leov/E1AKoIfrtm3cLbWY44IaaC43uwHcMvrq72hKG9t9b9Z5BJu/2Rsy3RSNCzu7x+89Af2KvwKypWBjpyfWxmnDr4VN7Lq4vcvA8ba/+u59wWDCAa5PqxWg727XQSuDkJS7KiIhFfGYUZwaLBfGybeo+KYYsJ3IQHZ5U6lsBoRo5OWYqmnZbaqY6UiI5lCilR7q3bdNhGpvygyxl16ZlIKU0TG1EsvwuZuWTN5gZNkCjxM5VhZHgNdojvzDd3dtk0jQpR0WvLxk35Cw9NItWe6sGGLpBrMddFuEenNHZHL+ftYJMCg==</X509Certificate></X509Data></wsse:SecurityTokenReference></KeyInfo></Signature></wsse:Security></env:Header><env:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="_7463881f2a66f86a6969cf3356878417957fd481"><tns:initTransaction><email>user@email.com</email></tns:initTransaction></env:Body></env:Envelope>' # rubocop:disable LineLength
-      doc = described_class.new(:url, :action, {})
-      expect(doc.to_xml.tr("\n", "")).to eq(valid_xml)
+    describe '#signed_xml' do
+      let(:signed_xml) { open_xml 'get_transaction_result/request_signed.xml' }
+      it { expect(subject.signed_xml).to eq_xml(signed_xml) }
     end
   end
+
+  context 'acknowledgeTransaction' do
+    let(:xml) { open_xml 'acknowledge_transaction/request_unsigned.xml' }
+    let(:token) { 'nxBdsbdSPixMZsIajOJWyg2OklTBcXXiW1rxnSpi9fCg1sMaxay4xWMuYV0fTUay' }
+    subject { described_class.new(:acknowledgeTransaction, tokenInput: token) }
+
+    describe '#unsigned_xml' do
+      it { expect(subject.unsigned_xml).to eq_xml(xml) }
+    end
+
+    describe '#signed_xml' do
+      let(:signed_xml) { open_xml 'acknowledge_transaction/request_signed.xml' }
+      it { expect(subject.signed_xml).to eq_xml(signed_xml) }
+    end
+  end
+
+  context 'nullify' do
+    let(:xml) { open_xml 'nullify/request_unsigned.xml' }
+    let(:params) do
+      hash = {
+        authorizationCode: 1234,
+        authorizedAmount: 21_000,
+        buyOrder: '33E6D9CC59332AT25',
+        nullifyAmount: 21_000,
+        commerceId: 197_320_000_333
+      }
+
+      { nullificationInput: hash }
+    end
+
+    subject { described_class.new(:nullify, params) }
+
+    describe '#unsigned_xml' do
+      it { expect(subject.unsigned_xml).to eq_xml(xml) }
+    end
+
+    describe '#signed_xml' do
+      let(:signed_xml) { open_xml 'nullify/request_signed.xml' }
+      it { expect(subject.signed_xml).to eq_xml(signed_xml) }
+    end
+  end
+
+  # def clear(xml)
+  #   xml.gsub(%r{\s*/?>\s*}, ">").gsub(%r{\s*/?<\s*}, "<")
+  # end
 end

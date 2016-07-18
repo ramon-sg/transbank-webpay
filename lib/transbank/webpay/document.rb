@@ -1,14 +1,23 @@
 module Transbank
   module Webpay
     class Document
-      attr_reader :unsigned_document, :unsigned_xml
+      attr_reader :unsigned_xml
       XML_HEADER = "<env:Header><wsse:Security xmlns:wsse='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd' wsse:mustUnderstand='1'/></env:Header>".freeze # rubocop:disable LineLength
       SOAPENV = 'http://schemas.xmlsoap.org/soap/envelope/'.freeze
 
-      def initialize(wsdl_url, action, params = {})
-        client = Savon.client(wsdl: wsdl_url)
-        xml = client.build_request(action, message: params).body
-        @unsigned_document = Nokogiri::XML(xml)
+      NAMESPACES = {
+        'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema',
+        'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+        'xmlns:tns' => 'http://service.wswebpay.webpay.transbank.com/',
+        'xmlns:env' => 'http://schemas.xmlsoap.org/soap/envelope/'
+      }.freeze
+
+      def initialize(action, params = {})
+        @unsigned_xml = build_xml action, params
+      end
+
+      def unsigned_document
+        @unsigned_document ||= Nokogiri::XML(unsigned_xml)
       end
 
       def envelope
@@ -44,6 +53,30 @@ module Transbank
 
         signer.sign!(:issuer_serial => true)
         signer.to_xml
+      end
+
+      private
+
+      def build_xml(action, params = {})
+        xml = Builder::XmlMarkup.new indent: 0
+        xml.instruct! :xml, encoding: 'UTF-8'
+        xml.env(:Envelope, NAMESPACES) do
+          xml.env(:Body) do
+            xml.tns(action) do
+              params.each do |name, value|
+                build_tag(xml, name, value)
+              end
+            end
+          end
+        end
+      end
+
+      def build_tag(xml, name, value)
+        return xml.tag!(name, value) unless value.is_a?(Hash)
+
+        xml.tag!(name) do
+          value.each { |k, v| build_tag(xml, k, v) }
+        end
       end
 
       def cert

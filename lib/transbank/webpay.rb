@@ -1,8 +1,9 @@
 require 'net/https'
 require 'uri'
-require 'savon'
+require 'nokogiri'
 require 'signer'
 require 'ostruct'
+require 'builder'
 
 require 'transbank/webpay/version'
 require 'transbank/webpay/configuration'

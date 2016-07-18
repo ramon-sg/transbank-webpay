@@ -6,15 +6,15 @@
                 <SignedInfo>
                     <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
                     <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-                    <Reference URI="#_24a29558b8359ebedfa373989357a703f024dba7">
+                    <Reference URI="#_5484f263ee56e3c03d27e6d8634ef9bf1a7cad73">
                         <Transforms>
                             <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
                         </Transforms>
                         <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-                        <DigestValue>O3WNIV6q/3Fi4tR5GIk1QN+/bNY=</DigestValue>
+                        <DigestValue>EjSHLJSnBMyWNjn+lXFOKnuEJX0=</DigestValue>
                     </Reference>
                 </SignedInfo>
-                <SignatureValue>Z9DXI4ecoXLHJBiAKqi0qPBSBYGQVtarD5dJu47mpVojkUVW5rUS6GRhoi/0AphZ28UCNyI7XU+7Sm9IuKuHNYFWrX/0nKTzt6W/PGc7fp0gzfLZ5lv+K0NTGcsEW/hhDye7tegG0Kdh7LZBynoxhi+XqBLRYWbhhRfAK1+Q27Jem/Jhj07dSO93V26Sctzj+eQjMhXo195x/kLS2DWcrGVHf0Z10NOyk88IScGjmucspRPmT26JSkNa3COz6HzOnfQWYjM8pyS8bMPVYjcesCfVSy9J5lJPpFHvK8QihXRyxGeA/g44vikaP0/3Gcnm3oKMyXuXqM5yYX3uGEHPjA==</SignatureValue>
+                <SignatureValue>BJLr8vPVrdNNjRR9RHOyEmLmVqyGXwvcyzm3/HfXKspfjLbE1BqnGAWBLXfagCPU+nEQrh25Q/WFUEfaDxHySxEdQ53INE1Uc363Tchc/2GOqpFYUKyOY3Uu345qCzR3ZmzIilBDS06l+iZj/GyZq63UNelFZQ1nj/GyLI38ipsYzod6dqFjGiID1o6kHEXH33qoS0zgnszMsY37gBPudz1Oz4vf7SorygtPGGHXsmuHb3MBPv/Y2dwDXrdy3aOTw6/ttYyPpBQKRrtfB/UCgcgahwBL0nU7CxvVfraW1sHBDqB448J5UqLsQXemu1I1aB5YbzuSUAtDCOlFoY0GLw==</SignatureValue>
                 <KeyInfo>
                     <X509Data>
                         <X509IssuerSerial>
@@ -27,15 +27,9 @@
             </Signature>
         </wsse:Security>
     </env:Header>
-    <env:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="_24a29558b8359ebedfa373989357a703f024dba7">
-        <tns:nullify>
-            <nullificationInput>
-                <authorizationCode>1234</authorizationCode>
-                <authorizedAmount>21000</authorizedAmount>
-                <buyOrder>33E6D9CC59332AT25</buyOrder>
-                <nullifyAmount>21000</nullifyAmount>
-                <commerceId>197320000333</commerceId>
-            </nullificationInput>
-        </tns:nullify>
+    <env:Body xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="_5484f263ee56e3c03d27e6d8634ef9bf1a7cad73">
+        <tns:acknowledgeTransaction>
+            <tokenInput>nxBdsbdSPixMZsIajOJWyg2OklTBcXXiW1rxnSpi9fCg1sMaxay4xWMuYV0fTUay</tokenInput>
+        </tns:acknowledgeTransaction>
     </env:Body>
 </env:Envelope>

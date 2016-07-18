@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://service.wswebpay.webpay.transbank.com/" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+    <env:Body>
+        <tns:getTransactionResult>
+            <tokenInput>e123b4d90adfde61427trw370961d6e58824429c40d90ae2fbe565c26c65Ccd4</tokenInput>
+        </tns:getTransactionResult>
+    </env:Body>
+</env:Envelope>
