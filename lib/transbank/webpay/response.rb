@@ -23,7 +23,7 @@ module Transbank
 
       def inspect
         result = ["valid: #{valid?}"]
-        result << attributes_display if attributes.any?
+        result << attributes_display if attributes_hash.any?
         result << "error: \"#{errors_display}\"" if errors.any?
         "#<#{self.class} #{result.join(', ')} >"
       end
@@ -47,7 +47,11 @@ module Transbank
       private
 
       def attributes_display
-        attributes.to_h.map { |name, value| "#{name}: \"#{value}\"" }.join ', '
+        attributes_hash.map { |name, value| "#{name}: \"#{value}\"" }.join ', '
+      end
+
+      def attributes_hash
+        @attributes_hash ||= attributes.to_h
       end
     end
   end
