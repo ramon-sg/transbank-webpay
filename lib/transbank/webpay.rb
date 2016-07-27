@@ -7,6 +7,7 @@ require 'builder'
 
 require 'transbank/webpay/version'
 require 'transbank/webpay/configuration'
+require 'transbank/webpay/vault'
 require 'transbank/webpay/validations'
 require 'transbank/webpay/struct'
 require 'transbank/webpay/reader'
