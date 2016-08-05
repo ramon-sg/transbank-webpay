@@ -42,8 +42,8 @@ module Transbank
 
       # Validations
       def validate_response_code!
-        return if response_code.empty?
-        @errors << response_code_display if response_code != '0'
+        return if xml_response_code.empty?
+        @errors << response_code_display if xml_response_code != '0'
       end
 
       def validate_http_response!
