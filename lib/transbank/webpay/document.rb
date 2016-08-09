@@ -46,8 +46,8 @@ module Transbank
         unsigned_xml = unsigned_document.to_s
 
         signer = Signer.new(unsigned_xml)
-        signer.cert = cert
-        signer.private_key = private_key
+        signer.cert = Transbank::Webpay::Vault.cert
+        signer.private_key = Transbank::Webpay::Vault.private_key
 
         signer.document.xpath('//soapenv:Body', soapenv: SOAPENV).each do |node|
           signer.digest!(node)
@@ -81,13 +81,13 @@ module Transbank
         end
       end
 
-      def cert
-        @cert ||= OpenSSL::X509::Certificate.new open(Transbank::Webpay.configuration.cert_path)
-      end
+      # def cert
+      #   @cert ||= OpenSSL::X509::Certificate.new open(Transbank::Webpay.configuration.cert_path)
+      # end
 
-      def private_key
-        @private_key ||= OpenSSL::PKey::RSA.new open(Transbank::Webpay.configuration.key_path)
-      end
+      # def private_key
+      #   @private_key ||= OpenSSL::PKey::RSA.new open(Transbank::Webpay.configuration.key_path)
+      # end
     end
   end
 end

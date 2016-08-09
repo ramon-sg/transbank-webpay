@@ -27,7 +27,7 @@ module Transbank
       end
 
       def response_code_display
-        RESPONSE_CODE.fetch(action, RESPONSE_CODE[:default]).fetch(response_code, response_code)
+        RESPONSE_CODE.fetch(action, RESPONSE_CODE[:default]).fetch(xml_response_code, xml_response_code)
       end
 
       def body
@@ -56,7 +56,7 @@ module Transbank
         doc.xpath("//faultstring")
       end
 
-      def response_code
+      def xml_response_code
         doc.xpath("//responseCode").text
       end
 

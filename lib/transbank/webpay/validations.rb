@@ -29,21 +29,21 @@ module Transbank
         Base64.encode64(digest).strip
       end
 
-      def server_cert
-        @server_cert ||= begin
-          path = Transbank::Webpay.configuration.server_cert_path
-          OpenSSL::X509::Certificate.new File.read(path)
-        end
-      end
+      # def server_cert
+      #   @server_cert ||= begin
+      #     path = Transbank::Webpay.configuration.server_cert_path
+      #     OpenSSL::X509::Certificate.new File.read(path)
+      #   end
+      # end
 
-      def pub_key
-        server_cert.public_key
-      end
+      # def pub_key
+      #   server_cert.public_key
+      # end
 
       # Validations
       def validate_response_code!
-        return if response_code.empty?
-        @errors << response_code_display if response_code != '0'
+        return if xml_response_code.empty?
+        @errors << response_code_display if xml_response_code != '0'
       end
 
       def validate_http_response!
@@ -63,7 +63,11 @@ module Transbank
           Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0, ["soap"], nil
         )
 
-        pub_key.verify OpenSSL::Digest::SHA1.new, signature_decode, signed_node_canonicalize
+        Transbank::Webpay::Vault.pub_key.verify(
+          OpenSSL::Digest::SHA1.new,
+          signature_decode,
+          signed_node_canonicalize
+        )
       end
 
       def validate_digest
