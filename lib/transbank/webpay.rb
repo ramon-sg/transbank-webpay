@@ -24,19 +24,19 @@ require 'transbank/webpay/api'
 module Transbank
   module Webpay
     class << self
-      attr_accessor :configuration
+      attr_reader :configuration
 
       # Delegate api
       Api.instance_methods.each { |m| define_method(m) { |*args| api.send(m, *args) } }
-    end
 
-    def self.configure
-      self.configuration ||= Configuration.new
-      yield(configuration)
-    end
+      def configure
+        @configuration ||= Configuration.new
+        yield(@configuration)
+      end
 
-    def self.api
-      @api ||= Api.new
+      def api
+        @api ||= Api.new
+      end
     end
   end
 end
