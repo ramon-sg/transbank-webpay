@@ -1,3 +1,6 @@
+# Deprecation Notice:
+This SDK is deprecated. For alternatives, please visit [•tbk. | DEVELOPERS - Documentación](https://www.transbankdevelopers.cl/documentacion/oneclick#crear-una-inscripcion)
+
 # Transbank::Webpay
 
 Ruby Implementation of Transbank Webpay API SOAP
