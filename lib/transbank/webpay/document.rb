@@ -42,7 +42,7 @@ module Transbank
       end
 
       def signed_xml
-        envelope.prepend_child(XML_HEADER)
+        envelope.children.first.add_previous_sibling(XML_HEADER)
         unsigned_xml = unsigned_document.to_s
 
         signer = Signer.new(unsigned_xml)
